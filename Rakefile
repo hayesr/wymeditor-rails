@@ -48,8 +48,8 @@ end
 task :extract do
   `rm -rf tmp/wymeditor`
   `tar -xf tmp/wymeditor.tar.gz -C tmp/`
-  `rm -rf assets/precompiled/wymeditor`
-  `mkdir -p assets/precompiled/wymeditor`
-  `mv tmp/wymeditor/wymeditor/* assets/precompiled/wymeditor/`
+  `rm -rf vendor/assets/wymeditor`
+  `mkdir -p vendor/assets/wymeditor`
+  `mv tmp/wymeditor/wymeditor/* vendor/assets/wymeditor/`
 end
 
