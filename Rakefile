@@ -30,3 +30,26 @@ Dir["#{File.dirname(__FILE__)}/tasks/*.rake"].sort.each { |ext| load ext }
 
 task :default => :spec
 
+
+
+def download(url, filename)
+  puts "Downloading #{url} ..."
+  `mkdir -p tmp`
+  `curl -L -# #{url} -o tmp/#{filename}`
+end
+
+desc "Update wymeditor to version specified in lib/wymeditor-rails/version.rb"
+task :update => [ :fetch, :extract ]
+
+task :fetch do
+  download("https://github.com/downloads/wymeditor/wymeditor/wymeditor-#{WymeditorRails::WYMEDITOR_VERSION}.tar.gz", "wymeditor.tar.gz")
+end
+
+task :extract do
+  `rm -rf tmp/wymeditor`
+  `tar -xf tmp/wymeditor.tar.gz -C tmp/`
+  `rm -rf assets/precompiled/wymeditor`
+  `mkdir -p assets/precompiled/wymeditor`
+  `mv tmp/wymeditor/wymeditor/* assets/precompiled/wymeditor/`
+end
+
